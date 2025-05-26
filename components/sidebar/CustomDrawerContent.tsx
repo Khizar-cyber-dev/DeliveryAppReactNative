@@ -1,9 +1,14 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-export default function CustomDrawerContent(props: any) {
+export default function CustomDrawerContent(props: DrawerContentComponentProps) {
+  const navigateTo = (screenName: string) => {
+    props.navigation.navigate(screenName);
+    props.navigation.closeDrawer();
+  };
+
   return (
     <View className="flex-1 bg-white">
       <DrawerContentScrollView
@@ -12,7 +17,7 @@ export default function CustomDrawerContent(props: any) {
       >
         {/* Profile Section */}
         <View className="items-center py-6 px-4 border-b border-gray-200">
-          <TouchableOpacity onPress={() => props.navigation.navigate('profile')}>
+          <TouchableOpacity onPress={() => navigateTo('profile')}>
             <View className="items-center mb-4">
               <Image
                 source={{
@@ -34,7 +39,7 @@ export default function CustomDrawerContent(props: any) {
         <View className="px-3 py-2">
           <TouchableOpacity
             className="flex-row items-center py-3 px-4 rounded-lg mb-1"
-            onPress={() => props.navigation.navigate('Dashboard')}
+            onPress={() => navigateTo('Dashboard')}
           >
             <Ionicons name="home-outline" size={22} color="#6b7280" />
             <Text className="ml-4 text-base font-medium text-gray-700">
@@ -49,10 +54,23 @@ export default function CustomDrawerContent(props: any) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="flex-row items-center py-3 px-4 rounded-lg mb-1">
+          <TouchableOpacity 
+            className="flex-row items-center py-3 px-4 rounded-lg mb-1" 
+            onPress={() => navigateTo('Orders')}
+          >
             <Ionicons name="document-text-outline" size={22} color="#6b7280" />
             <Text className="ml-4 text-base font-medium text-gray-700">
-              Documents
+              Orders
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            className="flex-row items-center py-3 px-4 rounded-lg mb-1" 
+            onPress={() => navigateTo('OrderPage')}
+          >
+            <Ionicons name="document-text-outline" size={22} color="#6b7280" />
+            <Text className="ml-4 text-base font-medium text-gray-700">
+              Orders Page
             </Text>
           </TouchableOpacity>
         </View>
@@ -62,7 +80,7 @@ export default function CustomDrawerContent(props: any) {
       <View className="p-4 border-t border-gray-200">
         <TouchableOpacity
           className="flex-row items-center py-3 px-2"
-          onPress={() => props.navigation.navigate('profile')}
+          onPress={() => navigateTo('profile')}
         >
           <Ionicons name="settings-outline" size={20} color="#6b7280" />
           <Text className="ml-4 text-sm text-gray-700">Settings</Text>
@@ -70,7 +88,7 @@ export default function CustomDrawerContent(props: any) {
 
         <TouchableOpacity
           className="flex-row items-center py-3 px-2"
-          onPress={() => props.navigation.navigate('SignIn')}
+          onPress={() => navigateTo('SignIn')}
         >
           <MaterialIcons name="logout" size={20} color="#6b7280" />
           <Text className="ml-4 text-sm text-gray-700">Logout</Text>
